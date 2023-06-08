@@ -13,10 +13,8 @@ tbl <- biomformat::read_biom(tbl_file)
 tbl <- t(as.matrix(biomformat::biom_data(tbl)))
 
 md <- read.table(md_file, sep="\t", header=T, na.strings="")
+colnames(md)[colnames(md) == "stensl_id"] = "id"
 row.names(md) <- md$SampleID
-
-print(head(md))
-print(dim(md))
 
 result <- FEAST::STENSL(
     C=tbl,
