@@ -1,4 +1,4 @@
-from qiime2.plugin import Plugin, Int, Str, Metadata
+from qiime2.plugin import Plugin, Int, Str, Metadata, List, Float
 from q2_types.feature_table import FeatureTable, Frequency, RelativeFrequency
 
 from ._methods import track
@@ -18,12 +18,14 @@ plugin = Plugin(
 
 PARAMS = {
     "metadata": Metadata,
-    "em_iterations": Int
+    "em_iterations": Int,
+    "lambda_vals": List[Float]
 }
 
 PARAMS_DESC = {
     "metadata": "Sample metadata in FEAST format",
-    "em_iterations": "Max expectation-maximization iterations"
+    "em_iterations": "Max expectation-maximization iterations",
+    "lambda_vals": "Values of lambda to test"
 }
 
 

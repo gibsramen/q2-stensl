@@ -7,7 +7,10 @@ args <- commandArgs(trailingOnly=T)
 tbl_file <- args[1]
 md_file <- args[2]
 em_iterations <- as.numeric(args[3])
-output <- args[4]
+lambda_vals <- args[4]
+output <- args[5]
+
+lambda_vals <- as.numeric(strsplit(lambda_vals, ",")[[1]])
 
 tbl <- biomformat::read_biom(tbl_file)
 tbl <- t(as.matrix(biomformat::biom_data(tbl)))
@@ -21,7 +24,7 @@ result <- FEAST::STENSL(
     metadata=md,
     EM_iterations=em_iterations,
     COVERAGE=NULL,
-    l.range=c(0.01)
+    l.range=lambda_vals
 )
 mix_props <- result$proportions_mat
 

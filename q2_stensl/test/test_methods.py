@@ -17,7 +17,7 @@ def test_stensl():
     md = pd.read_table(md_file, sep="\t")
     md.index = md.SampleID
 
-    props = methods._track(tbl, md, em_iterations=5)
+    props = methods._track(tbl, md, em_iterations=5, lambda_vals=[0.01, 0.1])
     exp_dim = (1, 51)
     assert props.shape == exp_dim
 
@@ -32,7 +32,8 @@ def test_q2_stensl():
     tbl = Artifact.load(tbl_file)
     md = Metadata.load(md_file)
 
-    props, = stensl.methods.track(tbl, md, em_iterations=5)
+    props, = stensl.methods.track(tbl, md, em_iterations=5,
+                                  lambda_vals=[0.01, 0.1])
     props = props.view(pd.DataFrame)
     exp_dim = (1, 51)
     assert props.shape == exp_dim

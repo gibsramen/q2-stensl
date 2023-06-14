@@ -14,15 +14,18 @@ def track(
     table: biom.Table,
     metadata: Metadata,
     em_iterations: int = 1000,
+    lambda_vals: list = None
 ) -> pd.DataFrame:
+    lambda_vals = lambda_vals or [0.01, 1, 10, 100]
     metadata = metadata.to_dataframe()
-    return _track(table, metadata, em_iterations)
+    return _track(table, metadata, em_iterations, lambda_vals)
 
 
 def _track(
     table: biom.Table,
     metadata: pd.DataFrame,
-    em_iterations: int = 1000,
+    em_iterations: int,
+    lambda_vals: list
 ):
     with TemporaryDirectory() as tmpdir:
         tmpdir = pathlib.Path(tmpdir)
@@ -41,6 +44,7 @@ def _track(
             tbl_fp,
             md_fp,
             str(em_iterations),
+            ",".join(map(str, lambda_vals)),
             out_fp
         ]
         run(args)
